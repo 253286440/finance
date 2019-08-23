@@ -1,7 +1,9 @@
 package org.free.sso.framework.mybatis
 
-import org.slf4j.{Logger, LoggerFactory}
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+
+import scala.collection.JavaConverters
 
 /**
  * baseService of jdbc,implements base CRUD operations
@@ -57,5 +59,14 @@ trait BaseService[T] {
    */
   def deleteByPrimaryKey(id:Any) : Int = {
     mapper.deleteByPrimaryKey(id)
+  }
+
+  /**
+   * batch insert
+   * @param list  records to insert
+   * @return  effected count of this insert
+   */
+  def insertList(list: List[T]):Int={
+    mapper.insertList(JavaConverters.seqAsJavaList(list))
   }
 }
